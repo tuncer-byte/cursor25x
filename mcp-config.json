@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "interactive-task-loop": {
+      "command": "node",
+      "args": ["dist/index.js"],
+      "cwd": "/Users/ates/cursor25x",
+      "env": {}
+    }
+  }
+} 
