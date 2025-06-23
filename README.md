@@ -1,34 +1,34 @@
 # CURSOR25X - Interactive Task Loop MCP Server
 
-🚀 **CURSOR25X**, Cursor IDE için geliştirilmiş interactive task loop MCP (Model Context Protocol) server'ıdır. Kullanıcıdan sürekli input alarak task-based işlemleri gerçekleştirir ve modern web uygulamaları geliştirir.
+🚀 **CURSOR25X** is an interactive task loop MCP (Model Context Protocol) server developed for Cursor IDE. It performs task-based operations by continuously receiving user input and develops modern web applications.
 
-## 🎯 Özellikler
+## 🎯 Features
 
-- 🔄 **Interactive Task Loop**: Sürekli kullanıcı girdisi ile task döngüsü
-- 📝 **Automatic File Management**: `cursor25xinput.cjs` dosyasını otomatik oluşturur
-- 🌐 **Web App Ready**: Modern web uygulamaları için hazır
-- 📁 **Smart Working Directory**: Cursor workspace'ini otomatik algılar
-- 🛑 **Graceful Exit**: "stop" komutu ile temiz çıkış
-- ⚡ **Task Processing**: Girdi türüne göre uygun task belirleme
-- 📋 **Cursor Rules Integration**: `.cursor/rules/cursor25x.mdc` kuralları
+- 🔄 **Interactive Task Loop**: Continuous task loop with user input
+- 📝 **Automatic File Management**: Automatically creates `cursor25xinput.cjs` file
+- 🌐 **Web App Ready**: Ready for modern web applications
+- 📁 **Smart Working Directory**: Automatically detects Cursor workspace
+- 🛑 **Graceful Exit**: Clean exit with "stop" command
+- ⚡ **Task Processing**: Determines appropriate tasks based on input type
+- 📋 **Cursor Rules Integration**: `.cursor/rules/cursor25x.mdc` rules
 
-## 🚀 Hızlı Kurulum
+## 🚀 Quick Setup
 
-### 1. Repository'yi Clone Edin
+### 1. Clone Repository
 ```bash
 git clone https://github.com/tuncer-byte/cursor25x.git
 cd cursor25x
 ```
 
-### 2. Bağımlılıkları Yükleyin
+### 2. Install Dependencies
 ```bash
 npm install
 npm run build
 ```
 
-### 3. Cursor IDE'ye Entegre Edin
+### 3. Integrate with Cursor IDE
 
-`~/.cursor/mcp.json` dosyasına aşağıdakini ekleyin:
+Add the following to your `~/.cursor/mcp.json` file:
 
 ```json
 {
@@ -41,48 +41,48 @@ npm run build
 }
 ```
 
-### 4. Kullanıma Başlayın
+### 4. Start Using
 
-Cursor IDE'de:
+In Cursor IDE:
 1. Ctrl+Shift+P > "MCP: Connect to Server"
-2. `cursor25x` server'ını seçin
-3. `start_task_loop` tool'unu çalıştırın
+2. Select `cursor25x` server
+3. Run `start_task_loop` tool
 
-## 🔧 Kullanım
+## 🔧 Usage
 
-### Ana Tool: `start_task_loop`
+### Main Tool: `start_task_loop`
 
-**Tek tool, maksimum güç!** 
+**One tool, maximum power!** 
 
 ```javascript
-// Cursor IDE'de bu tool'u çalıştırın:
+// Run this tool in Cursor IDE:
 mcp_cursor25x_start_task_loop()
 ```
 
-**Ne Yapar:**
-- 🔄 Interactive döngü başlatır
-- 📝 `cursor25xinput.cjs` oluşturur
-- 📋 `.cursor/rules/cursor25x.mdc` kural dosyası oluşturur
-- 🖥️ Terminal'de kullanıcı input'u bekler
-- ⚡ Input'a göre task işler
+**What it does:**
+- 🔄 Starts interactive loop
+- 📝 Creates `cursor25xinput.cjs`
+- 📋 Creates `.cursor/rules/cursor25x.mdc` rules file
+- 🖥️ Waits for user input in terminal
+- ⚡ Processes tasks based on input
 
 ## 📊 Task Loop Workflow
 
 ```mermaid
 graph TD
-    A[Tool Başlatılır] --> B[Dosyalar Kontrol Edilir]
-    B --> C[cursor25xinput.cjs Oluşturulur]
-    C --> D[.cursor/rules/cursor25x.mdc Oluşturulur]
-    D --> E[Node Input Script Çalıştırılır]
-    E --> F[Kullanıcı Input'u Beklenir]
-    F --> G{Input Türü?}
+    A[Tool Started] --> B[Check Files]
+    B --> C[Create cursor25xinput.cjs]
+    C --> D[Create .cursor/rules/cursor25x.mdc]
+    D --> E[Run Node Input Script]
+    E --> F[Wait for User Input]
+    F --> G{Input Type?}
     G -->|"create"| H[Create Task]
     G -->|"read"| I[Read Task]
     G -->|"update"| J[Update Task]
     G -->|"delete"| K[Delete Task]
     G -->|"help"| L[Help Task]
-    G -->|"stop"| M[Döngü Sonlanır]
-    H --> N[Sonuç Döndürülür]
+    G -->|"stop"| M[End Loop]
+    H --> N[Return Result]
     I --> N
     J --> N
     K --> N
@@ -90,55 +90,55 @@ graph TD
     N --> E
 ```
 
-## 💡 Örnek Kullanım Komutları
+## 💡 Example Usage Commands
 
-### Web Uygulaması Oluşturma
+### Create Web Application
 ```bash
 🚀 CURSOR25X prompt: create a modern React web app with authentication
 ```
 
-### Kod İnceleme
+### Code Review
 ```bash
 🚀 CURSOR25X prompt: read and analyze the current project structure
 ```
 
-### Güncelleme
+### Update
 ```bash
 🚀 CURSOR25X prompt: update the package.json with latest dependencies
 ```
 
-### Yardım
+### Help
 ```bash
 🚀 CURSOR25X prompt: help
 ```
 
-### Döngüyü Sonlandırma
+### End Loop
 ```bash
 🚀 CURSOR25X prompt: stop
 ```
 
-## 🏗️ Proje Yapısı
+## 🏗️ Project Structure
 
 ```
 cursor25x/
 ├── src/
-│   ├── index.ts              # Ana MCP server
+│   ├── index.ts              # Main MCP server
 │   ├── interactive-loop.ts   # Task loop logic
 │   ├── input-handler.ts      # Input processing
-│   └── rules.ts             # Task kuralları
+│   └── rules.ts             # Task rules
 ├── dist/                    # Compiled JavaScript
 ├── .cursor/
 │   └── rules/
-│       └── cursor25x.mdc    # Cursor IDE kuralları
+│       └── cursor25x.mdc    # Cursor IDE rules
 ├── cursor25xinput.cjs       # Interactive input handler
 ├── package.json
 ├── tsconfig.json
 └── README.md
 ```
 
-## 🛠️ Geliştirme
+## 🛠️ Development
 
-### Development Modunda Çalıştırma
+### Run in Development Mode
 ```bash
 npm run dev
 ```
@@ -148,87 +148,87 @@ npm run dev
 npm run build
 ```
 
-### Test Etme
+### Testing
 ```bash
-# MCP server'ı test et
+# Test MCP server
 node dist/index.js
 ```
 
-## 🔧 Konfigürasyon
+## 🔧 Configuration
 
 ### Working Directory
-Server otomatik olarak şu sırada working directory belirler:
+Server automatically determines working directory in this order:
 1. `CURSOR_WORKSPACE` environment variable
 2. `PWD` environment variable  
 3. `~/cursor25x` default directory
 
 ### Cursor Rules
-`.cursor/rules/cursor25x.mdc` dosyası otomatik oluşturulur ve şunları içerir:
-- Task loop workflow kuralları
-- Input processing rehberi
-- Error handling direktifleri
-- Kullanım örnekleri
+`.cursor/rules/cursor25x.mdc` file is automatically created and includes:
+- Task loop workflow rules
+- Input processing guide
+- Error handling directives
+- Usage examples
 
-## 🌐 Web App Desteği
+## 🌐 Web App Support
 
-CURSOR25X, modern web uygulaması geliştirme için optimize edilmiştir:
+CURSOR25X is optimized for modern web application development:
 
-- **React/Vue/Angular** projeleri
-- **Node.js** backend geliştirme  
-- **Database** entegrasyonu
-- **API** geliştirme
-- **Authentication** sistemleri
-- **Modern UI/UX** tasarım
+- **React/Vue/Angular** projects
+- **Node.js** backend development  
+- **Database** integration
+- **API** development
+- **Authentication** systems
+- **Modern UI/UX** design
 
 ## 🚨 Troubleshooting
 
-### MCP Connection Hatası
+### MCP Connection Error
 ```bash
-# Server'ın çalıştığını kontrol edin
+# Check if server is running
 ps aux | grep cursor25x
 
-# Port kontrolü
+# Port check
 netstat -an | grep LISTEN
 ```
 
-### Build Hatası
+### Build Error
 ```bash
-# Dependencies'i temizle ve yeniden yükle
+# Clean dependencies and reinstall
 rm -rf node_modules package-lock.json
 npm install
 npm run build
 ```
 
-### Cursor Integration Hatası
-1. `~/.cursor/mcp.json` dosyasını kontrol edin
-2. Path'lerin doğru olduğundan emin olun
-3. Cursor IDE'yi yeniden başlatın
+### Cursor Integration Error
+1. Check `~/.cursor/mcp.json` file
+2. Make sure paths are correct
+3. Restart Cursor IDE
 
-## 🤝 Katkıda Bulunma
+## 🤝 Contributing
 
-1. Fork edin
-2. Feature branch oluşturun (`git checkout -b feature/amazing-feature`)
-3. Commit edin (`git commit -m 'Add amazing feature'`)
-4. Push edin (`git push origin feature/amazing-feature`)
-5. Pull Request oluşturun
+1. Fork the project
+2. Create feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Create Pull Request
 
-## 📝 Lisans
+## 📝 License
 
-MIT License - detaylar için [LICENSE](LICENSE) dosyasını inceleyin.
+MIT License - see [LICENSE](LICENSE) file for details.
 
 ## 🎉 Credits
 
-- **Geliştirici**: [tuncer-byte](https://github.com/tuncer-byte)
+- **Developer**: [tuncer-byte](https://github.com/tuncer-byte)
 - **MCP SDK**: [@modelcontextprotocol/sdk](https://github.com/modelcontextprotocol/sdk)
 - **Cursor IDE**: [Cursor](https://cursor.sh/)
 
-## 📞 İletişim
+## 📞 Contact
 
 - **GitHub Issues**: [Issues](https://github.com/tuncer-byte/cursor25x/issues)
 - **Discussions**: [Discussions](https://github.com/tuncer-byte/cursor25x/discussions)
 
 ---
 
-🚀 **CURSOR25X ile development workflow'unuzu 25x hızlandırın!**
+🚀 **Speed up your development workflow 25x with CURSOR25X!**
 
-*Modern AI-powered development için tasarlandı. Cursor IDE ile mükemmel uyum.* 
+*Designed for modern AI-powered development. Perfect harmony with Cursor IDE.* 
