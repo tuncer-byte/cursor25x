@@ -1,0 +1,59 @@
+# CURSOR25X Interactive Task Loop Rules
+
+## 🎯 Ana Workflow
+
+### 1. Başlangıç Kontrolü
+- cursor25xinput.cjs dosyasının varlığını kontrol et
+- Yoksa otomatik oluştur
+
+### 2. Ana İş Akışı
+1. **Görev İşleme**: Mevcut görevleri tamamla
+2. **Kullanıcı Input'u**: node cursor25xinput.cjs çalıştır
+3. **Terminal Açma**: Terminal chat penceresinde açılmalı
+4. **Input Okuma**: Kullanıcının girdiği input'u oku
+5. **Görev Planlama**: Input'a göre sonraki görevleri planla
+6. **Döngü Devamı**: İşlemi tekrarla
+
+### 3. Çıkış Koşulu
+- Kullanıcı "stop" girdiğinde döngüyü sonlandır
+
+## 🔧 Teknik Detaylar
+
+### Dosya Yapısı
+- `cursor25xinput.cjs`: Node.js readline ile input alma
+- `.cursor/rules/cursor25x.mdc`: Bu kural dosyası
+
+### Input Processing
+- **Create**: Yeni dosya/proje oluşturma
+- **Read**: Dosya okuma, analiz
+- **Update**: Kod güncelleme, düzenleme  
+- **Delete**: Dosya silme
+- **Help**: Yardım bilgileri
+- **Stop**: Döngüyü sonlandır
+
+### Error Handling
+- Dosya oluşturma hatalarını yakala
+- Input/output hatalarını logla
+- Graceful shutdown sağla
+
+## 📋 Kullanım Örnekleri
+
+```bash
+# Loop başlatma
+node cursor25xinput.cjs
+
+# Örnek inputlar:
+"create a new React component"
+"read and analyze app.js"  
+"update the database schema"
+"help with debugging"
+"stop"
+```
+
+## 🚨 Önemli Notlar
+
+- Her iteration'da dosya varlığını kontrol et
+- Kullanıcı input'u stdin'den al
+- Console.log ile output ver (stdout)
+- Error'ları stderr'e yaz
+- Terminal'i chat penceresinde aç

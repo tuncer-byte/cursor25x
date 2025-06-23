@@ -100,6 +100,3 @@ logs
 temp/
 tmp/
 
-# User input files (generated at runtime)
-cursor25xinput.cjs
-.cursor/rules/cursor25x.mdc 
