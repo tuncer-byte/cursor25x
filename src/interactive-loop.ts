@@ -1,7 +1,6 @@
 import { spawn } from 'child_process';
 import * as fs from 'fs';
 import * as path from 'path';
-import * as os from 'os';
 
 export interface TaskLoopResult {
   success: boolean;
@@ -12,22 +11,16 @@ export interface TaskLoopResult {
 
 export class InteractiveTaskLoop {
   private workingDirectory: string;
-  private isRunning: boolean = false;
-  private maxIterations: number = 50;
   private currentIteration: number = 0;
   
   constructor(workingDirectory: string = process.cwd()) {
     this.workingDirectory = workingDirectory;
   }
 
-  /**
-   * Create cursor25xinput.cjs file for JavaScript-based input handling
-   */
   public ensureUserInputFile(): boolean {
     try {
       const userInputPath = path.join(this.workingDirectory, 'cursor25xinput.cjs');
       
-      // Eğer dosya zaten varsa true döndür 
       if (fs.existsSync(userInputPath)) {
         return true;
       }
@@ -54,85 +47,66 @@ rl.question('🚀 CURSOR25X prompt: ', (answer) => {
     }
   }
 
-  /**
-   * Create enhanced cursor25x.mdc file
-   */
   public async ensureCursorRulesFile(): Promise<boolean> {
     try {
-      // .cursor/rules/ dizinini oluştur
       const rulesDir = path.join(this.workingDirectory, '.cursor', 'rules');
       const mdcFilePath = path.join(rulesDir, 'cursor25x.mdc');
       
-      // Eğer dosya zaten varsa true döndür
       if (fs.existsSync(mdcFilePath)) {
         return true;
       }
       
-      // Dizinleri oluştur (recursive)
       if (!fs.existsSync(rulesDir)) {
         fs.mkdirSync(rulesDir, { recursive: true });
       }
       
-      const mdcContent = `# CURSOR25X Interactive Task Loop Rules
+      const mdcContent = `---
+description: Interactive Task Loop Rules
+globs: ["**/*"]
+alwaysApply: true
+---
 
-## 🎯 Ana Workflow
+### ✅ Task: Interactive Task Loop with User Feedback
 
-### 1. Başlangıç Kontrolü
-- cursor25xinput.cjs dosyasının varlığını kontrol et
-- Yoksa otomatik oluştur
+1. **Check if \`cursor25xinput.cjs\` exists** in the root directory.
 
-### 2. Ana İş Akışı
-1. **Görev İşleme**: Mevcut görevleri tamamla
-2. **Kullanıcı Input'u**: node cursor25xinput.cjs çalıştır
-3. **Terminal Açma**: Terminal chat penceresinde açılmalı
-4. **Input Okuma**: Kullanıcının girdiği input'u oku
-5. **Görev Planlama**: Input'a göre sonraki görevleri planla
-6. **Döngü Devamı**: İşlemi tekrarla
+   * If it doesn't exist, create it with the following content:
 
-### 3. Çıkış Koşulu
-- Kullanıcı "stop" girdiğinde döngüyü sonlandır
+     \`\`\`js
+   // cursor25xinput.cjs - CURSOR25X Interactive Input Handler
+const readline = require('readline');
 
-## 🔧 Teknik Detaylar
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-### Dosya Yapısı
-- \`cursor25xinput.cjs\`: Node.js readline ile input alma
-- \`.cursor/rules/cursor25x.mdc\`: Bu kural dosyası
+rl.question('🚀 CURSOR25X prompt: ', (answer) => {
+    console.log(answer);
+    rl.close();
+});
+     \`\`\`
 
-### Input Processing
-- **Create**: Yeni dosya/proje oluşturma
-- **Read**: Dosya okuma, analiz
-- **Update**: Kod güncelleme, düzenleme  
-- **Delete**: Dosya silme
-- **Help**: Yardım bilgileri
-- **Stop**: Döngüyü sonlandır
+2. **Main Workflow**:
 
-### Error Handling
-- Dosya oluşturma hatalarını yakala
-- Input/output hatalarını logla
-- Graceful shutdown sağla
+   * Perform your assigned tasks.
 
-## 📋 Kullanım Örnekleri
+   * Run:
 
-\`\`\`bash
-# Loop başlatma
-node cursor25xinput.cjs
+     \`\`\`bash
+     node cursor25xinput.cjs
+     \`\`\`
+   * The terminal should be opened in the chat window itself.
 
-# Örnek inputlar:
-"create a new React component"
-"read and analyze app.js"  
-"update the database schema"
-"help with debugging"
-"stop"
-\`\`\`
+   * Read the user's input.
 
-## 🚨 Önemli Notlar
+   * Based on the input, perform the next set of tasks.
 
-- Her iteration'da dosya varlığını kontrol et
-- Kullanıcı input'u stdin'den al
-- Console.log ile output ver (stdout)
-- Error'ları stderr'e yaz
-- Terminal'i chat penceresinde aç
-`;
+   * Repeat the process.
+
+3. **Exit Condition**:
+
+   * If the user enters \`"cursor25x finish"\` when prompted, exit the loop and terminate the process.`;
       
       fs.writeFileSync(mdcFilePath, mdcContent, 'utf8');
       return fs.existsSync(mdcFilePath);
@@ -142,9 +116,6 @@ node cursor25xinput.cjs
     }
   }
 
-  /**
-   * Run the user input script and get the result
-   */
   private async runUserInputScript(): Promise<string> {
     return new Promise((resolve, reject) => {
       const scriptPath = path.join(this.workingDirectory, 'cursor25xinput.cjs');
@@ -182,7 +153,6 @@ node cursor25xinput.cjs
         reject(error);
       });
 
-      // 30 saniye timeout
       setTimeout(() => {
         child.kill('SIGTERM');
         reject(new Error('User input timeout after 30 seconds'));
@@ -190,9 +160,6 @@ node cursor25xinput.cjs
     });
   }
 
-  /**
-   * Process user input and return appropriate message
-   */
   private async processUserInput(input: string): Promise<string> {
     const lowerInput = input.toLowerCase();
     
@@ -211,37 +178,23 @@ node cursor25xinput.cjs
     }
   }
 
-  /**
-   * Run a single iteration of the task loop
-   */
   async runSingleIteration(): Promise<TaskLoopResult> {
     try {
-      // İlk iteration'da dosyaları oluştur
       if (this.currentIteration === 0) {
-        // Dosyaları oluştur
         const inputFileCreated = this.ensureUserInputFile();
         const rulesFileCreated = await this.ensureCursorRulesFile();
         
-        if (!inputFileCreated) {
+        if (!inputFileCreated || !rulesFileCreated) {
           return {
             success: false,
-            message: 'Failed to create cursor25xinput.cjs',
+            message: 'Failed to create required files',
             error: 'File creation failed'
-          };
-        }
-        
-        if (!rulesFileCreated) {
-          return {
-            success: false,
-            message: 'Failed to create cursor25x.mdc',
-            error: 'Rules file creation failed'
           };
         }
       }
       
       this.currentIteration++;
       
-      // Kullanıcıdan input al
       const userInput = await this.runUserInputScript();
       
       if (!userInput) {
@@ -252,7 +205,6 @@ node cursor25xinput.cjs
         };
       }
       
-      // Input'u işle
       const taskMessage = await this.processUserInput(userInput);
       
       return {
@@ -270,11 +222,6 @@ node cursor25xinput.cjs
     }
   }
 
-  checkUserInputFileExists(): boolean {
-    const userInputPath = path.join(this.workingDirectory, 'cursor25xinput.cjs');
-    return fs.existsSync(userInputPath);
-  }
-
   getWorkingDirectory(): string {
     return this.workingDirectory;
   }
@@ -282,4 +229,4 @@ node cursor25xinput.cjs
   setWorkingDirectory(dir: string): void {
     this.workingDirectory = dir;
   }
-} 
+}

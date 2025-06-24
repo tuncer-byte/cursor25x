@@ -1,59 +1,53 @@
-# CURSOR25X Interactive Task Loop Rules
+---
+description: 
+globs: 
+alwaysApply: false
+---
+---
+description: 
+globs: 
+alwaysApply: true
+---
 
-## 🎯 Ana Workflow
+### ✅ Task: Interactive Task Loop with User Feedback
 
-### 1. Başlangıç Kontrolü
-- cursor25xinput.cjs dosyasının varlığını kontrol et
-- Yoksa otomatik oluştur
+1. **Check if `cursor25xinput.cjs` exists** in the root directory.
 
-### 2. Ana İş Akışı
-1. **Görev İşleme**: Mevcut görevleri tamamla
-2. **Kullanıcı Input'u**: node cursor25xinput.cjs çalıştır
-3. **Terminal Açma**: Terminal chat penceresinde açılmalı
-4. **Input Okuma**: Kullanıcının girdiği input'u oku
-5. **Görev Planlama**: Input'a göre sonraki görevleri planla
-6. **Döngü Devamı**: İşlemi tekrarla
+   * If it doesn't exist, create it with the following content:
 
-### 3. Çıkış Koşulu
-- Kullanıcı "stop" girdiğinde döngüyü sonlandır
+     ```js
+   // cursor25xinput.cjs - CURSOR25X Interactive Input Handler
+const readline = require('readline');
 
-## 🔧 Teknik Detaylar
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
 
-### Dosya Yapısı
-- `cursor25xinput.cjs`: Node.js readline ile input alma
-- `.cursor/rules/cursor25x.mdc`: Bu kural dosyası
+rl.question('🚀 CURSOR25X prompt: ', (answer) => {
+    console.log(answer);
+    rl.close();
+});
 
-### Input Processing
-- **Create**: Yeni dosya/proje oluşturma
-- **Read**: Dosya okuma, analiz
-- **Update**: Kod güncelleme, düzenleme  
-- **Delete**: Dosya silme
-- **Help**: Yardım bilgileri
-- **Stop**: Döngüyü sonlandır
+     ```
 
-### Error Handling
-- Dosya oluşturma hatalarını yakala
-- Input/output hatalarını logla
-- Graceful shutdown sağla
+2. **Main Workflow**:
 
-## 📋 Kullanım Örnekleri
+   * Perform your assigned tasks.
 
-```bash
-# Loop başlatma
-node cursor25xinput.cjs
+   * Run:
 
-# Örnek inputlar:
-"create a new React component"
-"read and analyze app.js"  
-"update the database schema"
-"help with debugging"
-"stop"
-```
+     ```bash
+     node cursor25xinput.cjs
+     ```
+   * The terminal should be opened in the chat window itself.
 
-## 🚨 Önemli Notlar
+   * Read the user's input.
 
-- Her iteration'da dosya varlığını kontrol et
-- Kullanıcı input'u stdin'den al
-- Console.log ile output ver (stdout)
-- Error'ları stderr'e yaz
-- Terminal'i chat penceresinde aç
+   * Based on the input, perform the next set of tasks.
+
+   * Repeat the process.
+
+3. **Exit Condition**:
+
+   * If the user enters `"cursor25x finish"` when prompted, exit the loop and terminate the process.
