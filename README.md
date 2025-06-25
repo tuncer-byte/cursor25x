@@ -1,9 +1,11 @@
 # CURSOR25X - Interactive Task Loop MCP Server
 
 
-youtube : tuncer-byte
-linkedln: tuncer-bagcabasi
-instagram: tuncer-byte
+## 📱 Social Media
+
+[![YouTube](https://img.shields.io/badge/YouTube-tuncer--byte-red)](https://youtube.com/@tuncerbyte)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-tuncer--bagcabasi-blue)](https://linkedin.com/in/tuncer-bagcabasi)
+[![Instagram](https://img.shields.io/badge/Instagram-tuncer--byte-purple)](https://instagram.com/tuncer_byte)
 
 🚀 **CURSOR25X** is an interactive task loop MCP (Model Context Protocol) server developed for Cursor IDE. It performs task-based operations by continuously receiving user input and develops modern web applications.
 
