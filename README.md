@@ -1,3 +1,5 @@
+[![MseeP.ai Security Assessment Badge](https://mseep.net/pr/tuncer-byte-cursor25x-badge.png)](https://mseep.ai/app/tuncer-byte-cursor25x)
+
 # CURSOR25X - Interactive Task Loop MCP Server
 
 
